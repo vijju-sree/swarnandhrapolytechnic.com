@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Example</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4; /* Light background for the whole page */
+        }
+
+        /* Swarnandhra Header Style */
+        .header {
+            background-color: #003366; /* Swarnandhra Navy Blue */
+            color: #FFD700; /* Gold */
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 30px; /* Larger text */
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10; /* Ensures the header is always on top */
+        }
+
+        .header img {
+            width: 60px; /* Larger logo size */
+            height: auto;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+
+        .login-container {
+            background-color: #ffffff; /* White background for login section */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px; /* Increased width */
+            text-align: center;
+            margin-top: 100px;
+            font-size: 18px; /* Larger text */
+        }
+
+        .login-container h2 {
+            margin-bottom: 30px;
+            color: #003366; /* Swarnandhra Navy Blue for header */
+            font-size: 24px; /* Larger header text */
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 15px;
+            background-color: #003366; /* Navy Blue for button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Larger button text */
+        }
+
+        .login-container button:hover {
+            background-color: #004080; /* Slightly darker blue when hovered */
+        }
+
+        .button-container {
+            text-align: center;
+            display: none;
+        }
+
+        .button-container button {
+            padding: 15px 30px;
+            background-color: #FFD700; /* Gold color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Larger button text */
+            margin: 10px;
+        }
+
+        .button-container button:hover {
+            background-color: #ffcc00; /* Darker gold for hover effect */
+        }
+
+        /* Dropdown and options styling */
+        .options-container {
+            margin-top: 30px;
+            display: none;
+            text-align: center;
+        }
+
+        .options-container select {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 18px;
+        }
+
+        .options-container button {
+            padding: 15px 30px;
+            background-color: #003366; /* Swarnandhra Navy Blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .options-container button:hover {
+            background-color: #004080; /* Darker navy for hover */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Swarnandhra Header -->
+<div class="header">
+    <img src="https://www.swarnandhra.ac.in/img/footer/swarnandhra-logo-C.png" alt="Swarnandhra Logo"> 
+    Swarnandhra College of Engineering & Technology
+</div>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+<div class="button-container" id="buttonContainer" style="display: none;">
+    <button onclick="viewStudentDetails()">Student Details</button>
+    <button onclick="viewSemesterDetails()">Semester Details</button>
+    <button onclick="viewMidDetails()">Mid Details</button>
+</div>
+
+<!-- Options for Student Details -->
+<div class="options-container" id="optionsContainer" style="display: none;">
+    <h3>Select Branch and Year</h3>
+    <select id="branch">
+        <option value="">Select Branch</option>
+        <option value="AIML">Artificial Intelligence & Machine Learning</option>
+        <option value="CSE">Computer Science Engineering</option>
+    </select>
+
+    <select id="year">
+        <option value="">Select Year</option>
+        <option value="3">3rd Year</option>
+    </select>
+
+    <button onclick="submitStudentDetails()">Submit</button>
+</div>
+
+<!-- Options for Semester Details -->
+<div class="options-container" id="semesterOptionsContainer" style="display: none;">
+    <h3>Select Branch, Year, and Semester</h3>
+    <select id="semesterBranch">
+        <option value="">Select Branch</option>
+        <option value="AIML">Artificial Intelligence & Machine Learning</option>
+        <option value="CSE">Computer Science Engineering</option>
+    </select>
+
+    <select id="semesterYear">
+        <option value="">Select Year</option>
+        <option value="3">3rd Year</option>
+    </select>
+
+    <select id="semester">
+        <option value="">Select Semester</option>
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+    </select>
+
+    <button onclick="submitSemesterDetails()">Submit</button>
+</div>
+
+<!-- Options for Mid Details -->
+<div class="options-container" id="midOptionsContainer" style="display: none;">
+    <h3>Select Branch, Year, Semester, and Mid</h3>
+    <select id="midBranch">
+        <option value="">Select Branch</option>
+        <option value="AIML">Artificial Intelligence & Machine Learning</option>
+        <option value="CSE">Computer Science Engineering</option>
+    </select>
+
+    <select id="midYear">
+        <option value="">Select Year</option>
+        <option value="3">3rd Year</option>
+    </select>
+
+    <select id="midSemester">
+        <option value="">Select Semester</option>
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+    </select>
+
+    <select id="midOption">
+        <option value="">Select Mid</option>
+        <option value="1">Mid 1</option>
+        <option value="2">Mid 2</option>
+    </select>
+
+    <button onclick="submitMidDetails()">Submit</button>
+</div>
+
+<script>
+    // Simulate login validation
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        
+        const validUsername = "user";
+        const validPassword = "password123";
+        
+        if (username === validUsername && password === validPassword) {
+            document.querySelector(".login-container").style.display = "none";
+            document.getElementById("buttonContainer").style.display = "block";
+        } else {
+            alert("Invalid username or password");
+        }
+    });
+
+    // Show options for Student Details
+    function viewStudentDetails() {
+        document.getElementById("optionsContainer").style.display = "block";
+        document.getElementById("semesterOptionsContainer").style.display = "none";
+        document.getElementById("midOptionsContainer").style.display = "none";
+    }
+
+    // Show options for Semester Details
+    function viewSemesterDetails() {
+        document.getElementById("semesterOptionsContainer").style.display = "block";
+        document.getElementById("optionsContainer").style.display = "none";
+        document.getElementById("midOptionsContainer").style.display = "none";
+    }
+
+    // Show options for Mid Details
+    function viewMidDetails() {
+        document.getElementById("midOptionsContainer").style.display = "block";
+        document.getElementById("optionsContainer").style.display = "none";
+        document.getElementById("semesterOptionsContainer").style.display = "none";
+    }
+
+    // Submit Student Details
+    function submitStudentDetails() {
+        const branch = document.getElementById("branch").value;
+        const year = document.getElementById("year").value;
+        
+        if (branch === "AIML" && year === "3") {
+            const googlesheeturl = "https://docs.google.com/spreadsheets/d/1UNWSCHUeJYVhkDWpRB0ryG1tKW5FX1DwIQZ7n1YFPE0/edit?gid=0#gid=0";
+            window.open(googlesheeturl, "_blank");
+        } else if (branch === "CSE" && year === "3") {
+            const googlesheeturl = "https://docs.google.com/spreadsheets/d/1dyrSR5c8n0EZM9MtrJhAMj9_6J_4d7SQzmogn2ci14o/edit?pli=1&gid=0#gid=0";
+            window.open(googlesheeturl, "_blank");
+        } else {
+            alert("You selected: Branch - " + branch + ", Year - " + year);
+        }
+    }
+
+    // Submit Semester Details
+    function submitSemesterDetails() {
+        const branch = document.getElementById("semesterBranch").value;
+        const year = document.getElementById("semesterYear").value;
+        const semester = document.getElementById("semester").value;
+
+        if (branch === "" || year === "" || semester === "") {
+            alert("Please select branch, year, and semester.");
+        } else {
+            // Open specific Google Sheet for Semester
+            if (branch === "AIML" && year === "3" && semester === "1") {
+                const googleSheetsUrl = "https://docs.google.com/spreadsheets/d/1klw6yy9o5BOVDZv1jZn0rQ7ElgdmGtUyvg8ZizTUwF4/edit?gid=0#gid=0";
+                window.open(googleSheetsUrl, "_blank");
+            } else {
+                alert("You selected: Branch - " + branch + ", Year - " + year + ", Semester - " + semester);
+            }
+            if (branch === "CSE" && year === "3" && semester === "1") {
+                const googleSheetsUrl = "https://docs.google.com/spreadsheets/d/13MTMOzdL4xAItLu2LTy6Drx6kRdeyjbKSXavXbASkfM/edit?gid=0#gid=0";
+                window.open(googleSheetsUrl, "_blank");
+            } else {
+                alert("You selected: Branch - " + branch + ", Year - " + year + ", Semester - " + semester);
+            }
+            
+            
+            if (branch === "AIML" && year === "3" && semester === "2") {
+                const googleSheetsUrl = "https://docs.google.com/spreadsheets/d/1QW0R7fbRGVkkxQvJNXiV2T7QZwfSQhDloaFbqBGNjtI/edit?gid=0#gid=0";
+                window.open(googleSheetsUrl, "_blank");
+            } else {
+                alert("You selected: Branch - " + branch + ", Year - " + year + ", Semester - " + semester);
+            }
+            if (branch === "CSE" && year === "3" && semester === "2") {
+                const googleSheetsUrl = "https://docs.google.com/spreadsheets/d/1ElZbWnaiD2lzub2DkF6GFf2tXZMe55jFJUASB9NwmFk/edit?gid=0#gid=0";
+                window.open(googleSheetsUrl, "_blank");
+            } else {
+                alert("You selected: Branch - " + branch + ", Year - " + year + ", Semester - " + semester);
+            }
+            
+            
+            
+            
+        }
+    }
+
+    // Submit Mid Details
+    function submitMidDetails() {
+        const branch = document.getElementById("midBranch").value;
+        const year = document.getElementById("midYear").value;
+        const semester = document.getElementById("midSemester").value;
+        const mid = document.getElementById("midOption").value;
+
+        if (branch === "" || year === "" || semester === "" || mid === "") {
+            alert("Please select branch, year, semester, and mid.");
+        } else {
+            // Open specific Google Sheet for Mid
+            if (branch === "AIML" && year === "3" && semester === "1" && mid === "1") {
+                const googleSheetsUrl = "https://docs.google.com/spreadsheets/d/14xjHSk2D4SbdNaJX23FSdwql7igRt2b_20y5lzFMdjM/edit?gid=0#gid=0";
+                window.open(googleSheetsUrl, "_blank");
+            } else {
+                alert("You selected: Branch - " + branch + ", Year - " + year + ", Semester - " + semester + ", Mid - " + mid);
+            }
+            if (branch === "CSE" && year === "3" && semester === "1" && mid === "1") {
+                const googleSheetsUrl = "https://docs.google.com/spreadsheets/d/1uRNTxoniQcieTRF1RVS5BGGxPGmDemq7sbDv2WhlEjY/edit?gid=0#gid=0";
+                window.open(googleSheetsUrl, "_blank");
+            } else {
+                alert("You selected: Branch - " + branch + ", Year - " + year + ", Semester - " + semester + ", Mid - " + mid);
+            }
+            
+            if (branch === "AIML" && year === "3" && semester === "1" && mid === "2") {
+                const googleSheetsUrl = "https://docs.google.com/spreadsheets/d/1oQlf4psLEvkl0551oeYKVTsWDSxpWYtjFSny5AP-cYw/edit?gid=0#gid=0";
+                window.open(googleSheetsUrl, "_blank");
+            } else {
+                alert("You selected: Branch - " + branch + ", Year - " + year + ", Semester - " + semester + ", Mid - " + mid);
+            }
+            if (branch === "CSE" && year === "3" && semester === "1" && mid === "2") {
+                const googleSheetsUrl = "https://docs.google.com/spreadsheets/d/1nashda6FI2YVTqageobfp7CMCqmPNiJOOrSmbA8c6Mk/edit?gid=0#gid=0";
+                window.open(googleSheetsUrl, "_blank");
+            } else {
+                alert("You selected: Branch - " + branch + ", Year - " + year + ", Semester - " + semester + ", Mid - " + mid);
+            }
+            
+            
+        }
+    }
+</script>
+
+</body>
+</html>
